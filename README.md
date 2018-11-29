@@ -41,7 +41,7 @@ R->Sa|a;
 const path = require('path');
 const filePath = path.resolve(__dirname, './g.txt');
 const { translator } = require('../index');
-(async () => {
+(() => {
   const config = {
     displayProcess: true,
     inputPath: filePath,
