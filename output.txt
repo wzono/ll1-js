@@ -1,0 +1,5 @@
+S->Qc|cZ;
+Z->~|ab;
+Q->abJ|bJ|caN;
+N->bJ|babJ;
+J->cabJ|~;

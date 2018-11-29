@@ -1,0 +1,3 @@
+S->Qc|c|cab;
+Q->Rb|b;
+R->Sa|a;
