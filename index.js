@@ -31,19 +31,19 @@ function checkoutConfig(config = {}) {
     if (displayProcess) {
       console.log('===== (1) start creating grammer =====');
       formatOutputGrammer(grammer);
-      console.log('===== (1) completed =====');
+      console.log('===== (1) completed =====\n');
       console.log('===== (2) start eliminating left recursion =====');
       removeLeftRecursion(grammer);
       formatOutputGrammer(grammer);
-      console.log('===== (2) completed =====');
+      console.log('===== (2) completed =====\n');
       console.log('===== (3) start simplifying grammer =====');
       simplify(grammer);
       formatOutputGrammer(grammer);
-      console.log('===== (3) completed =====');
+      console.log('===== (3) completed =====\n');
       console.log('===== (4) start extracting left common factor  =====')
       removeLeftDivisor(grammer);
       formatOutputGrammer(grammer);
-      console.log('===== (4) completed =====');
+      console.log('===== (4) completed =====\n');
     } else {
       removeLeftRecursion(grammer);
       simplify(grammer);

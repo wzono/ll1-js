@@ -12,7 +12,7 @@ A LL1 grammar converter. The non-LL1 grammar is transformed into LL1 grammar by 
 $ npm install ll1-js --save
 ```
 
-### Usage
+### Usage
 
 ```js
 const { translator } = require('ll1-js');
@@ -22,6 +22,89 @@ const inputPath = path.resolve(__dirname, './g.txt');
 
 const ll1Produtions = translator({ inputPath });
 ```
+
+### Example
+
+### code
+
+```js
+// g.txt
+
+S->Qc|c|cab;
+Q->Rb|b;
+R->Sa|a;
+```
+
+```js
+// ./test/index.js
+
+const path = require('path');
+const filePath = path.resolve(__dirname, './g.txt');
+const { translator } = require('../index');
+(async () => {
+  const config = {
+    displayProcess: true,
+    inputPath: filePath,
+    outputPath: './output.txt',
+    startSymbol: 'S',
+  }
+  const ll1Produtions = translator(config);
+})()
+
+```bash
+===== (1) start creating grammer =====
+Grammer:
+Terminal: c,a,b
+NonTerminal: S,Q,R
+StartSymbol: S
+ProductionFormula:
+S->Qc|c|cab;
+Q->Rb|b;
+R->Sa|a;
+===== (1) completed =====
+
+===== (2) start eliminating left recursion =====
+Grammer:
+Terminal: c,a,b,~
+NonTerminal: S,Q,D,R
+StartSymbol: S
+ProductionFormula:
+S->Qc|c|cab;
+Q->cabD|cababD|abD|bD;
+R->Qca|ca|caba|a;
+D->cabD|~;
+===== (2) completed =====
+
+===== (3) start simplifying grammer =====
+Grammer:
+Terminal: c,a,b,~
+NonTerminal: S,Q,D
+StartSymbol: S
+ProductionFormula:
+S->Qc|c|cab;
+Q->cabD|cababD|abD|bD;
+D->cabD|~;
+===== (3) completed =====
+
+===== (4) start extracting left common factor  =====
+Grammer:
+Terminal: c,~,a,b
+NonTerminal: S,Q,U,D,I
+StartSymbol: S
+ProductionFormula:
+S->Qc|cU;
+U->~|ab;
+Q->abD|bD|caI;
+I->bD|babD;
+D->cabD|~;
+===== (4) completed =====
+```
+
+### result
+
+
+
+
 
 ## Config
 
