@@ -1,0 +1,27 @@
+{
+  "name": "ll1-js",
+  "version": "1.0.0",
+  "description": "A LL1 grammar converter. The non-LL1 grammar is transformed into LL1 grammar by eliminating left recursion, simplifying and extracting left factors.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "node ./test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wingsico/ll1.git"
+  },
+  "keywords": [
+    "ll1",
+    "js",
+    "parser"
+  ],
+  "author": "wingsico",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wingsico/ll1/issues"
+  },
+  "homepage": "https://github.com/wingsico/ll1#readme"
+}
