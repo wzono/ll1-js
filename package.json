@@ -1,6 +1,6 @@
 {
   "name": "ll1-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A LL1 grammar converter. The non-LL1 grammar is transformed into LL1 grammar by eliminating left recursion, simplifying and extracting left factors.",
   "main": "index.js",
   "directories": {

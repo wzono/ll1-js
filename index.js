@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Grammer = require('./lib/class/Grammer');
-const { formatGsString, formatGsArray, formatOutputGrammer } = require('./lib/utils');
+const utils = require('./lib/utils');
 const removeLeftRecursion = require('./lib/components/removeLeftRecursion');
 const removeLeftDivisor = require('./lib/components/removeLeftDivisor');
 const simplify = require('./lib/components/simplify');
@@ -11,6 +11,8 @@ function checkoutConfig(config = {}) {
     throw new Error("lack of required config attributes: inputPath")
   }
 }
+
+const { formatGsArray, formatGsString, formatOutputGrammer, formatOutputProdutions} = utils;
 
 (async () => {
   exports.translator = function (customConfig = {}) {
@@ -57,4 +59,7 @@ function checkoutConfig(config = {}) {
 
     return productions;
   }
+
+  exports.utils = utils;
+  exports.Grammer = Grammer;
 })()

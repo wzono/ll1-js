@@ -1,6 +1,6 @@
 const path = require('path');
 const filePath = path.resolve(__dirname, './g.txt');
-const { translator } = require('../index');
+const { translator, utils, Grammer } = require('../index');
 (() => {
   const config = {
     displayProcess: true,
@@ -10,4 +10,5 @@ const { translator } = require('../index');
   }
 
   const ll1Produtions = translator(config);
+  console.log(utils, Grammer)
 })()

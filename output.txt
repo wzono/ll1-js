@@ -1,5 +1,3 @@
-S->Qc|cU;
-U->~|ab;
-Q->abD|bD|caI;
-I->bD|babD;
-D->cabD|~;
+S->abcP|bcP|cG;
+G->P|abP;
+P->abcP|~;
