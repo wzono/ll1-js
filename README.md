@@ -50,6 +50,7 @@ const { translator } = require('../index');
   }
   const ll1Produtions = translator(config);
 })()
+```
 
 ```bash
 ===== (1) start creating grammer =====
