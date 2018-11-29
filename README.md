@@ -40,7 +40,7 @@ R->Sa|a;
 
 const path = require('path');
 const filePath = path.resolve(__dirname, './g.txt');
-const { translator } = require('../index');
+const { translator, Grammer, utils } = require('../index');
 (() => {
   const config = {
     displayProcess: true,
@@ -48,7 +48,7 @@ const { translator } = require('../index');
     outputPath: './output.txt',
     startSymbol: 'S',
   }
-  const ll1Produtions = translator(config);
+  const { productions, grammer } = translator(config);
 })()
 ```
 
