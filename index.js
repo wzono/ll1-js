@@ -57,7 +57,10 @@ const { formatGsArray, formatGsString, formatOutputGrammer, formatOutputProdutio
       fs.writeFileSync(outputPath, Object.keys(productions).map(key => `${key}->${productions[key]};`).join("\n"));
     }
 
-    return productions;
+    return {
+      productions,
+      grammer
+    };
   }
 
   exports.utils = utils;
