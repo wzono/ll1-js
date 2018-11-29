@@ -1,3 +1,5 @@
-S->abcP|bcP|cG;
-G->P|abP;
-P->abcP|~;
+E->TQ;
+T->FR;
+F->i|(E);
+Q->+TQ|~;
+R->*FR|~;
