@@ -52,6 +52,8 @@ const { translator } = require('../index');
 })()
 ```
 
+### result
+
 ```bash
 ===== (1) start creating grammer =====
 Grammer:
@@ -100,12 +102,6 @@ I->bD|babD;
 D->cabD|~;
 ===== (4) completed =====
 ```
-
-### result
-
-
-
-
 
 ## Config
 
