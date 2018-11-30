@@ -46,10 +46,16 @@ const { formatGsArray, formatGsString, formatOutputGrammer, formatOutputProdutio
       removeLeftDivisor(grammer);
       formatOutputGrammer(grammer);
       console.log('===== (4) completed =====\n');
+      grammer.generateFirsts();
+      grammer.generateFollows();
+      grammer.generateTable();
     } else {
       removeLeftRecursion(grammer);
       simplify(grammer);
       removeLeftDivisor(grammer);
+      grammer.generateFirsts();
+      grammer.generateFollows();
+      grammer.generateTable();
     }
 
     const productions = grammer.getProductions();

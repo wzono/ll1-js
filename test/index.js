@@ -5,7 +5,7 @@ const { translator, utils, Grammer } = require('../index');
   const config = {
     displayProcess: false,
     inputPath: filePath,
-    outputPath: './output.txt',
+    outputPath: false,
     startSymbol: 'E',
   }
 
@@ -14,4 +14,5 @@ const { translator, utils, Grammer } = require('../index');
    * grammer ll1-grammer
    */
   const { productions, grammer } = translator(config);
+  console.log(grammer)
 })()
