@@ -30,9 +30,10 @@ const ll1Produtions = translator({ inputPath });
 ```js
 // g.txt
 
-S->Qc|c|cab;
-Q->Rb|b;
-R->Sa|a;
+E->T|E+T;
+T->F|T*F;
+F->i|(E);
+
 ```
 
 ```js
@@ -45,62 +46,111 @@ const { translator, Grammer, utils } = require('../index');
   const config = {
     displayProcess: true,
     inputPath: filePath,
-    outputPath: './output.txt',
-    startSymbol: 'S',
+    outputPath: false,
+    startSymbol: 'E',
   }
-  const { productions, grammer } = translator(config);
+
+  const { productions, nonTerminator, terminator, first, follow, table } = translator(config);
+
+  // all data export from `translator`
 })()
+
 ```
 
 ### result
 
 ```bash
+
 ===== (1) start creating grammer =====
 Grammer:
-Terminal: c,a,b
-NonTerminal: S,Q,R
-StartSymbol: S
+Terminal: +,*,i,(,)
+NonTerminal: E,T,F
+StartSymbol: E
 ProductionFormula:
-S->Qc|c|cab;
-Q->Rb|b;
-R->Sa|a;
+E->T|E+T;
+T->F|T*F;
+F->i|(E);
 ===== (1) completed =====
 
 ===== (2) start eliminating left recursion =====
 Grammer:
-Terminal: c,a,b,~
-NonTerminal: S,Q,D,R
-StartSymbol: S
+Terminal: i,(,),*,~,+
+NonTerminal: E,T,A,F,R
+StartSymbol: E
 ProductionFormula:
-S->Qc|c|cab;
-Q->cabD|cababD|abD|bD;
-R->Qca|ca|caba|a;
-D->cabD|~;
+E->TA;
+T->FR;
+F->i|(E);
+R->*FR|~;
+A->+TA|~;
 ===== (2) completed =====
 
 ===== (3) start simplifying grammer =====
 Grammer:
-Terminal: c,a,b,~
-NonTerminal: S,Q,D
-StartSymbol: S
+Terminal: i,(,),*,~,+
+NonTerminal: E,T,A,F,R
+StartSymbol: E
 ProductionFormula:
-S->Qc|c|cab;
-Q->cabD|cababD|abD|bD;
-D->cabD|~;
+E->TA;
+T->FR;
+F->i|(E);
+R->*FR|~;
+A->+TA|~;
 ===== (3) completed =====
 
 ===== (4) start extracting left common factor  =====
 Grammer:
-Terminal: c,~,a,b
-NonTerminal: S,Q,U,D,I
-StartSymbol: S
+Terminal: i,(,),*,~,+
+NonTerminal: E,T,A,F,R
+StartSymbol: E
 ProductionFormula:
-S->Qc|cU;
-U->~|ab;
-Q->abD|bD|caI;
-I->bD|babD;
-D->cabD|~;
+E->TA;
+T->FR;
+F->i|(E);
+R->*FR|~;
+A->+TA|~;
 ===== (4) completed =====
+
+===== (5) start generateFirsts  =====
+Grammer:
+Terminal: i,(,),*,~,+
+NonTerminal: E,T,A,F,R
+StartSymbol: E
+ProductionFormula:
+E->TA;
+T->FR;
+F->i|(E);
+R->*FR|~;
+A->+TA|~;
+===== (5) completed =====
+
+===== (6) start generateFollows  =====
+Grammer:
+Terminal: i,(,),*,~,+
+NonTerminal: E,T,A,F,R
+StartSymbol: E
+ProductionFormula:
+E->TA;
+T->FR;
+F->i|(E);
+R->*FR|~;
+A->+TA|~;
+===== (6) completed =====
+
+===== (7) start generateTable  =====
+Grammer:
+Terminal: i,(,),*,~,+
+NonTerminal: E,T,A,F,R
+StartSymbol: E
+ProductionFormula:
+E->TA;
+T->FR;
+F->i|(E);
+R->*FR|~;
+A->+TA|~;
+===== (7) completed =====
+
+===== !over! =====
 ```
 
 ## Config
@@ -117,13 +167,13 @@ D->cabD|~;
 
 ### explain
 
-#### inputPath
+#### inputPath [String] *required
 
 The path where the grammar file is located
 
 > tip: use 'path' package to resolve the relative path to absolute path;
 
-#### displayProcess
+#### displayProcess [Boolean]: true | false
 
 Whether or not the translation process is displayed
 
@@ -133,17 +183,19 @@ The translator takes four steps to convert a non-ll1 grammar into LL1 grammar:
   2. Eliminatie left recursion.
   3. Simplify.
   4. Extracte left common factor.
+  5. generateFirsts
+  6. generateFollows
+  7. generateTable
 
 When you set this attribute to truthy, you'will see the every step result on the terminal.
 
-#### outputPath
+#### outputPath [String | Boolean]: use false to disable it
 
 The output path of the transformed grammar
 
-#### startSymbol
+#### startSymbol [Char]
 
 A correct grammar requires a startSymbol. :)
-
 
 ## Issue
 

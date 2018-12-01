@@ -3,7 +3,7 @@ const filePath = path.resolve(__dirname, './g.txt');
 const { translator, utils, Grammer } = require('../index');
 (() => {
   const config = {
-    displayProcess: false,
+    displayProcess: true,
     inputPath: filePath,
     outputPath: false,
     startSymbol: 'E',
@@ -13,6 +13,5 @@ const { translator, utils, Grammer } = require('../index');
    * productions ll1-producations
    * grammer ll1-grammer
    */
-  const { productions, grammer } = translator(config);
-  console.log(grammer)
+  const { productions, nonTerminator, terminator, first, follow, table } = translator(config);
 })()

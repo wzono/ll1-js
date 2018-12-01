@@ -46,9 +46,19 @@ const { formatGsArray, formatGsString, formatOutputGrammer, formatOutputProdutio
       removeLeftDivisor(grammer);
       formatOutputGrammer(grammer);
       console.log('===== (4) completed =====\n');
+      console.log('===== (5) start generateFirsts  =====')
       grammer.generateFirsts();
+      formatOutputGrammer(grammer);
+      console.log('===== (5) completed =====\n');
+      console.log('===== (6) start generateFollows  =====')
       grammer.generateFollows();
+      formatOutputGrammer(grammer);
+      console.log('===== (6) completed =====\n');
+      console.log('===== (7) start generateTable  =====')
       grammer.generateTable();
+      formatOutputGrammer(grammer);
+      console.log('===== (7) completed =====\n');
+      console.log('===== !over! =====\n');
     } else {
       removeLeftRecursion(grammer);
       simplify(grammer);
@@ -59,13 +69,23 @@ const { formatGsArray, formatGsString, formatOutputGrammer, formatOutputProdutio
     }
 
     const productions = grammer.getProductions();
+    const first = grammer.getFirst();
+    const follow = grammer.getFollow();
+    const table = grammer.getTable();
+    const nonTerminator = grammer.getNonTerminator();
+    const terminator = grammer.getTerminator();
+
     if (!!outputPath) {
       fs.writeFileSync(outputPath, Object.keys(productions).map(key => `${key}->${productions[key]};`).join("\n"));
     }
 
     return {
       productions,
-      grammer
+      first,
+      follow,
+      table,
+      nonTerminator,
+      terminator,
     };
   }
 
