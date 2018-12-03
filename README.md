@@ -1,6 +1,6 @@
 # ll1
 
-ll(1) Grammer Analyzer
+ll(1) Grammar Analyzer
 
 A LL1 grammar converter. The non-LL1 grammar is transformed into LL1 grammar by eliminating left recursion, simplifying and extracting left factors.
 
@@ -41,7 +41,7 @@ F->i|(E);
 
 const path = require('path');
 const filePath = path.resolve(__dirname, './g.txt');
-const { translator, Grammer, utils } = require('../index');
+const { translator, Grammar, utils } = require('../index');
 (() => {
   const config = {
     displayProcess: true,
@@ -61,8 +61,8 @@ const { translator, Grammer, utils } = require('../index');
 
 ```bash
 
-===== (1) start creating grammer =====
-Grammer:
+===== (1) start creating grammar =====
+Grammar:
 Terminal: +,*,i,(,)
 NonTerminal: E,T,F
 StartSymbol: E
@@ -73,7 +73,7 @@ F->i|(E);
 ===== (1) completed =====
 
 ===== (2) start eliminating left recursion =====
-Grammer:
+Grammar:
 Terminal: i,(,),*,~,+
 NonTerminal: E,T,A,F,R
 StartSymbol: E
@@ -85,8 +85,8 @@ R->*FR|~;
 A->+TA|~;
 ===== (2) completed =====
 
-===== (3) start simplifying grammer =====
-Grammer:
+===== (3) start simplifying grammar =====
+Grammar:
 Terminal: i,(,),*,~,+
 NonTerminal: E,T,A,F,R
 StartSymbol: E
@@ -99,7 +99,7 @@ A->+TA|~;
 ===== (3) completed =====
 
 ===== (4) start extracting left common factor  =====
-Grammer:
+Grammar:
 Terminal: i,(,),*,~,+
 NonTerminal: E,T,A,F,R
 StartSymbol: E
@@ -112,7 +112,7 @@ A->+TA|~;
 ===== (4) completed =====
 
 ===== (5) start generateFirsts  =====
-Grammer:
+Grammar:
 Terminal: i,(,),*,~,+
 NonTerminal: E,T,A,F,R
 StartSymbol: E
@@ -125,7 +125,7 @@ A->+TA|~;
 ===== (5) completed =====
 
 ===== (6) start generateFollows  =====
-Grammer:
+Grammar:
 Terminal: i,(,),*,~,+
 NonTerminal: E,T,A,F,R
 StartSymbol: E
@@ -138,7 +138,7 @@ A->+TA|~;
 ===== (6) completed =====
 
 ===== (7) start generateTable  =====
-Grammer:
+Grammar:
 Terminal: i,(,),*,~,+
 NonTerminal: E,T,A,F,R
 StartSymbol: E

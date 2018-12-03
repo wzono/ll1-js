@@ -1,6 +1,6 @@
 const path = require('path');
 const filePath = path.resolve(__dirname, './g.txt');
-const { translator, utils, Grammer } = require('../index');
+const { translator, utils, Grammar } = require('../index');
 (() => {
   const config = {
     displayProcess: true,
@@ -11,7 +11,7 @@ const { translator, utils, Grammer } = require('../index');
 
   /**
    * productions ll1-producations
-   * grammer ll1-grammer
+   * grammar ll1-grammar
    */
-  const { productions, nonTerminator, terminator, first, follow, table } = translator(config);
+  const { productions, nonTerminator, terminator, first, follow, table, inputStopSymbol, startSymbol, emptyChar } = translator(config);
 })()

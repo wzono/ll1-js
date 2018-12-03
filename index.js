@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const Grammer = require('./lib/class/Grammer');
+const Grammar = require('./lib/class/Grammar');
 const utils = require('./lib/utils');
 const removeLeftRecursion = require('./lib/components/removeLeftRecursion');
 const removeLeftDivisor = require('./lib/components/removeLeftDivisor');
@@ -12,9 +12,10 @@ function checkoutConfig(config = {}) {
   }
 }
 
-const { formatGsArray, formatGsString, formatOutputGrammer, formatOutputProdutions} = utils;
+const { formatGsArray, formatGsString, formatOutputGrammar, formatOutputProdutions } = utils;
+const { emptyChar } = require('./lib/config');
 
-(async () => {
+(() => {
   exports.translator = function (customConfig = {}) {
     const config = Object.assign({
       inputPath: '',
@@ -29,51 +30,53 @@ const { formatGsArray, formatGsString, formatOutputGrammer, formatOutputProdutio
 
     const gs = formatGsArray(formatGsString(fs.readFileSync(inputPath, 'utf-8')));
 
-    const grammer = new Grammer(startSymbol, gs);
+    const grammar = new Grammar(startSymbol, gs);
     if (displayProcess) {
-      console.log('===== (1) start creating grammer =====');
-      formatOutputGrammer(grammer);
+      console.log('===== (1) start creating grammar =====');
+      formatOutputGrammar(grammar);
       console.log('===== (1) completed =====\n');
       console.log('===== (2) start eliminating left recursion =====');
-      removeLeftRecursion(grammer);
-      formatOutputGrammer(grammer);
+      removeLeftRecursion(grammar);
+      formatOutputGrammar(grammar);
       console.log('===== (2) completed =====\n');
-      console.log('===== (3) start simplifying grammer =====');
-      simplify(grammer);
-      formatOutputGrammer(grammer);
+      console.log('===== (3) start simplifying grammar =====');
+      simplify(grammar);
+      formatOutputGrammar(grammar);
       console.log('===== (3) completed =====\n');
       console.log('===== (4) start extracting left common factor  =====')
-      removeLeftDivisor(grammer);
-      formatOutputGrammer(grammer);
+      removeLeftDivisor(grammar);
+      formatOutputGrammar(grammar);
       console.log('===== (4) completed =====\n');
       console.log('===== (5) start generateFirsts  =====')
-      grammer.generateFirsts();
-      formatOutputGrammer(grammer);
+      grammar.generateFirsts();
+      formatOutputGrammar(grammar);
       console.log('===== (5) completed =====\n');
       console.log('===== (6) start generateFollows  =====')
-      grammer.generateFollows();
-      formatOutputGrammer(grammer);
+      grammar.generateFollows();
+      formatOutputGrammar(grammar);
       console.log('===== (6) completed =====\n');
       console.log('===== (7) start generateTable  =====')
-      grammer.generateTable();
-      formatOutputGrammer(grammer);
+      grammar.generateTable();
+      console.log(grammar)
+      formatOutputGrammar(grammar);
       console.log('===== (7) completed =====\n');
       console.log('===== !over! =====\n');
     } else {
-      removeLeftRecursion(grammer);
-      simplify(grammer);
-      removeLeftDivisor(grammer);
-      grammer.generateFirsts();
-      grammer.generateFollows();
-      grammer.generateTable();
+      removeLeftRecursion(grammar);
+      simplify(grammar);
+      removeLeftDivisor(grammar);
+      grammar.generateFirsts();
+      grammar.generateFollows();
+      grammar.generateTable();
     }
 
-    const productions = grammer.getProductions();
-    const first = grammer.getFirst();
-    const follow = grammer.getFollow();
-    const table = grammer.getTable();
-    const nonTerminator = grammer.getNonTerminator();
-    const terminator = grammer.getTerminator();
+    const productions = grammar.getProductions();
+    const first = grammar.getFirst();
+    const follow = grammar.getFollow();
+    const table = grammar.getTable();
+    const nonTerminator = grammar.getNonTerminator();
+    const terminator = grammar.getTerminator();
+    const inputStopSymbol = grammar.getInputStopSymbol();
 
     if (!!outputPath) {
       fs.writeFileSync(outputPath, Object.keys(productions).map(key => `${key}->${productions[key]};`).join("\n"));
@@ -86,9 +89,12 @@ const { formatGsArray, formatGsString, formatOutputGrammer, formatOutputProdutio
       table,
       nonTerminator,
       terminator,
+      inputStopSymbol,
+      startSymbol,
+      emptyChar,
     };
   }
 
   exports.utils = utils;
-  exports.Grammer = Grammer;
+  exports.Grammar = Grammar;
 })()
